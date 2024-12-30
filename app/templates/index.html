@@ -1,0 +1,23 @@
+{% extends 'base_main.html'%}
+
+
+{% block head_content %} 
+  
+{% endblock %}
+
+{% block main_content %}
+  <h1>{{ page_title }}</h1>
+
+  <h2>Hello, {{ user.username }}!</h2>
+  
+  <div class="section">
+    {% for post in posts %}
+      <h3>{{ post.title}}</h3>
+      <p>{{ post.body }}</p>
+      By: <span class="post_author">{{ post.author.username }}</span> 
+      <span class="post_posted">on: {{ post.posted }}</span> 
+      <p></p>
+    {% endfor %}
+  </div>
+
+{% endblock %}

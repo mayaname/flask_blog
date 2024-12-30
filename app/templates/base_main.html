@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/wolftrack.ico') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/main.css') }}">
+  {% if title %}
+   <title>{{ head_title }} - Microblog</title>
+  {% else %}
+    <title>Kwayzee Coder Microblog</title>
+  {% endif %}
+
+</head>
+<body>
+  <!-- Header section -->
+  {% include 'header.html' %}
+
+  <!-- Content section -->
+  <main class="main">
+      {% block main_content %} {% endblock %}
+  </main>
+
+  <!-- Footer section -->
+  {% include 'footer.html' %}
+
+</body>
+</html>

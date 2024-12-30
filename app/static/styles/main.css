@@ -1,0 +1,106 @@
+main.css
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+}
+
+html {
+  font-size: 12px;
+}
+
+body {
+  font-family: "Public Sans", sans-serif;
+  color: #333;
+  line-height: 1.45;
+
+}
+
+/* Navigation */
+.header-nav {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #333;
+  padding: 0.5rem 10%;
+}
+
+.logo {
+  margin-right: auto;
+  font-size: 28px;
+  font-weight: bolder;
+  color: #edf0f1;
+}
+
+.nav_links {
+  list-style: none;
+}
+
+.nav_links li {
+  display: inline-block;
+  padding: 0 20px;
+}
+.nav_links li a{
+  font-size: 16px;
+  font-weight: bold;
+  color: #edf0f1;
+  text-decoration: none;
+}
+
+.nav_links li a:hover {
+  text-decoration: underline;
+  transition: all 0.3s ease 0;
+}
+
+
+/* Main section */
+.main {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.page_title {
+  text-align: center;
+  margin: 2rem;
+}
+  
+.page_subtitle {
+  margin: 1.5rem;
+}
+
+.section {
+  width: 50%;
+  padding: 0 3rem;
+  margin: 20px auto;
+}
+
+
+
+
+/* Footer */
+.footer {
+  color: #333;
+  padding: 0.5rem;
+  font-size: 1em;
+  text-align: center;
+}
+
+
+
+/* Posts */
+
+.post_author {
+  font-weight: bold;
+  margin-right: 1rem;
+}
+
+.post_posted {
+  font-size: .75em;
+  color: #666;
+}
