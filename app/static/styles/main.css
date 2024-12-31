@@ -80,6 +80,77 @@ body {
   margin: 20px auto;
 }
 
+/* Flash notification section */
+.flash_container {
+  margin-top: 20px;
+}
+
+.flash {
+  margin: 0 auto;
+  width: 70%;
+  display: flex;
+  border: 1px solid #1c7530;
+  border-radius: 6px;
+}
+
+.flash .left-section {
+  width: 8%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
+  font-weight: bold;
+  color: white;
+}
+
+.flash .right-section {
+  width: 92%;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.flash.success .left-section {
+  background-color: darkgreen;
+}
+
+.flash.success .right-section {
+  background-color: #96faad;
+  color: darkgreen;
+}
+
+.flash.error .left-section {
+  background-color: darkred;
+}
+
+.flash.error .right-section {
+  background-color: #ffa7ae;
+  color: darkred;
+}
+
+.flash.warning .right-section {
+  background-color: #f9ffa7fd;
+  color: darkred;
+}
+
+.flash.warning .left-section {
+  background-color: #da9008;
+}
+
+.flash .close-btn { 
+  position: absolute; 
+  top: 5px; 
+  right: 5px; 
+  font-size: 15px; 
+  font-weight: bold; 
+  color: #333; 
+  cursor: pointer; 
+  padding-right: 10px; }
+
+.flash .close-btn:hover {
+  color: #666;
+}
 
 
 
@@ -94,6 +165,14 @@ body {
 
 
 /* Posts */
+
+.post_container {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 2rem;
+  box-shadow: 4px 4px 4px rgba(9, 9, 9, 0.4); 
+}
 
 .post_author {
   font-weight: bold;

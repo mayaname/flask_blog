@@ -14,9 +14,13 @@ Revisions:
 
 from flask import Flask
 from .routes import pages
+from .config import Config
 
 def create_app():
     app = Flask(__name__)
+
+    # Sets config for development
+    app.config.from_object(Config)
 
     # Register blueprints
     app.register_blueprint(pages)

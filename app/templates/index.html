@@ -12,11 +12,13 @@
   
   <div class="section">
     {% for post in posts %}
-      <h3>{{ post.title}}</h3>
-      <p>{{ post.body }}</p>
-      By: <span class="post_author">{{ post.author.username }}</span> 
-      <span class="post_posted">on: {{ post.posted }}</span> 
-      <p></p>
+      <div class="post_container">
+        <h3>{{ post.title}}</h3>
+        <p>{{ post.body }}</p>
+        By: <span class="post_author">{{ post.author.username }}</span> 
+        <span class="post_posted">on: {{ post.posted }}</span> 
+      </div>
+
     {% endfor %}
   </div>
 

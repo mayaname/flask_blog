@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/wolftrack.ico') }}">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/main.css') }}">
+
+  <script defer src="{{ url_for('static', filename='scripts/main.js') }}"></script>
+
+  {% block head_content %} {% endblock %}
+
   {% if title %}
    <title>{{ head_title }} - Microblog</title>
   {% else %}
@@ -15,6 +20,18 @@
 <body>
   <!-- Header section -->
   {% include 'header.html' %}
+
+  <div class="flash_container">
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+      <div class="flash {{ category }}" id="flash-message">
+        <div class="left-section">!</div>
+        <div class="right-section">
+          {{ message }}
+          <div class="close-btn" onclick="this.parentElement.parentElement.style.display='none';">x</div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 
   <!-- Content section -->
   <main class="main">
