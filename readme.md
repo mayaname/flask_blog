@@ -6,12 +6,26 @@ This is a micro-blog application loosely based the Flask Mega Tutorial series by
 
 ## Resources
 
+### Tutorial
+
 - [Flask Tutorial](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world) series
 
 - [GitHub](https://github.com/miguelgrinberg/microblog)
 
-- [Flask](https://flask.palletsprojects.com/en/3.0.x/) documentation
+### Package Documentation
 
-- [Dotenv](https://pypi.org/project/python-dotenv/) documentation
+- [Flask](https://flask.palletsprojects.com/en/3.0.x/) 
 
-- [WTForms](https://wtforms.readthedocs.io/en/3.2.x/) documentation
+- [Dotenv](https://pypi.org/project/python-dotenv/) 
+
+- [WTForms](https://wtforms.readthedocs.io/en/3.2.x/) 
+
+- [Flask SQLAlchemy](https://flask-sqlalchemy.readthedocs.io/en/stable/)
+
+- [Flask Migrate]()
+
+### Tools
+
+- [WWW SQL Designer](https://sql.toad.cz/?) Application
+
+- [WWW SQL Designer](https://github.com/ondras/wwwsqldesigner/wiki/Manual) Documentation
