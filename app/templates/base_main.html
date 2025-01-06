@@ -10,10 +10,10 @@
 
   {% block head_content %} {% endblock %}
 
-  {% if title %}
-   <title>{{ head_title }} - Microblog</title>
+  {% if head_title %}
+   <title>Flask Journal - {{ head_title }}</title>
   {% else %}
-    <title>Kwayzee Coder Microblog</title>
+    <title>Flask Journal</title>
   {% endif %}
 
 </head>
