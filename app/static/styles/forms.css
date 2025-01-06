@@ -76,3 +76,36 @@
   padding: 30px;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.4); 
 }
+
+/* Show/Hide password buttons */
+.password-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.password-container input {
+
+  flex: 1;
+  width: 100%; 
+}
+
+.password-toggle {
+  margin-left: 8px; 
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding-bottom: 10px; /* Adjust button height to match textbox*/
+  display: flex;
+  align-items: center; 
+}
+
+.password-toggle .svg_icon {
+  width: 20px;
+  height: 20px;
+  color: #333;
+}
+
+.password-toggle .svg_icon:hover {
+  stroke: #666;
+}
