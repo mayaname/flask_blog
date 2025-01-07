@@ -7,13 +7,38 @@ main.css
 
 }
 
+:root {
+  --background-color: #333;
+  --background-table-alt: #bdbdbd;
+
+  --accent-color1: #ddd;
+  --accent-color2: #666;
+
+
+  --text-dark: #333;
+  --text-light: #fbfbfb;
+  --text-muted: #999;
+  --text-table: #333;
+
+  --flash-border: #666;
+  --error-dark: darkred;
+  --error-light: #ffa7ae;
+  --error-text: darkred;
+  --success-dark: darkgreen;
+  --success-light: #96faad;
+  --success-text: darkgreen;
+  --warning-dark: #da9008;
+  --warning-light: #f9ffa7fd;
+  --warning-text: darkred;
+}
+
 html {
   font-size: 12px;
 }
 
 body {
   font-family: "Public Sans", sans-serif;
-  color: #333;
+  color: var(--text-dark);
   line-height: 1.45;
 
 }
@@ -23,7 +48,7 @@ body {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  background-color: #333;
+  background-color: var(--background-color);
   padding: 0.5rem 10%;
 }
 
@@ -31,7 +56,7 @@ body {
   margin-right: auto;
   font-size: 20px;
   font-weight: bolder;
-  color: #edf0f1;
+  color: var(--text-light)
 }
 
 .nav_links {
@@ -45,7 +70,7 @@ body {
 .nav_links li a{
   font-size: 16px;
   font-weight: bold;
-  color: #edf0f1;
+  color: var(--text-light);
   text-decoration: none;
 }
 
@@ -89,8 +114,9 @@ body {
   margin: 0 auto;
   width: 70%;
   display: flex;
-  border: 1px solid #1c7530;
+  border: 1px solid var(--flash-border);
   border-radius: 6px;
+  box-shadow: 4px 4px 4px rgba(9, 9, 9, 0.4);
 }
 
 .flash .left-section {
@@ -100,7 +126,7 @@ body {
   justify-content: center;
   font-size: 2em;
   font-weight: bold;
-  color: white;
+  color: var(--text-light);
 }
 
 .flash .right-section {
@@ -112,30 +138,30 @@ body {
 }
 
 .flash.success .left-section {
-  background-color: darkgreen;
+  background-color: var(--success-dark);
 }
 
 .flash.success .right-section {
-  background-color: #96faad;
-  color: darkgreen;
+  background-color: var(--success-light);
+  color: var(--success-text);
 }
 
 .flash.error .left-section {
-  background-color: darkred;
+  background-color: var(--error-dark);
 }
 
 .flash.error .right-section {
-  background-color: #ffa7ae;
-  color: darkred;
-}
-
-.flash.warning .right-section {
-  background-color: #f9ffa7fd;
-  color: darkred;
+  background-color: var(--error-light);
+  color: var(--error-text);
 }
 
 .flash.warning .left-section {
-  background-color: #da9008;
+  background-color: var(--warning-dark);
+}
+
+.flash.warning .right-section {
+  background-color: var(--warning-light);
+  color: var(--warning-text);
 }
 
 .flash .close-btn { 
@@ -144,19 +170,19 @@ body {
   right: 5px; 
   font-size: 15px; 
   font-weight: bold; 
-  color: #333; 
+  color: var(--text-dark); 
   cursor: pointer; 
   padding-right: 10px; }
 
 .flash .close-btn:hover {
-  color: #666;
+  color: var(--accent-color2);
 }
 
 
 
 /* Footer */
 .footer {
-  color: #333;
+  color: var(--text-muted);
   padding: 0.5rem;
   font-size: 1em;
   text-align: center;
@@ -167,7 +193,7 @@ body {
 /* Posts */
 
 .post_container {
-  border: 1px solid #ddd;
+  border: 1px solid var(--accent-color1);
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 2rem;
@@ -181,5 +207,5 @@ body {
 
 .post_posted {
   font-size: .75em;
-  color: #666;
+  color: var(--accent-color2);
 }
