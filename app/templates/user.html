@@ -9,7 +9,16 @@
   <section class="profile_section">
     <img class="user_img" src="{{ user.avatar(128) }}">
     <div class="user_info">
-      <p class="info_title">{{ user.firstname }} {{ user.lastname }}</p>
+      <p class="info_title">
+        {% if user.firstname %}
+          {{ user.firstname }}
+        {% else %}
+          {{ user.username }}
+        {% endif %}
+        {% if user.lastname %}
+          {{ user.lastname }}
+        {% endif %}
+      </p>
       <ul>
         <li><span class="list_category">User ID:</span>  {{ user.username }}</li>
         <li>
