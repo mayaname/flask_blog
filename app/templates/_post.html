@@ -1,0 +1,9 @@
+<div class="post_container">
+  <div class="post_heading">
+    <span><img src="{{ post.author.avatar(36) }}"></span>
+    <span class="post_title">{{ post.title}}</span>
+  </div>
+  <p>{{ post.body }}</p>
+  By: <span class="post_author">{{ post.author.username }}</span> 
+  <span class="post_posted">on: {{ post.posted }}</span> 
+</div>

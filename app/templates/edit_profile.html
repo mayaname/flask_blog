@@ -1,0 +1,42 @@
+{% extends 'base_main.html'%}
+
+
+{% block head_content %} 
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/forms.css') }}">
+  <script defer src="{{ url_for('static', filename='scripts/login.js') }}"></script>
+{% endblock %}
+
+{% block main_content %}
+
+<h1>{{ page_title }}</h1>
+
+<section class="section_form">
+    <form  class="form" method="post" novalidate>
+      {{ form.hidden_tag() }}
+      <div class="form_group">
+        {{ form.username.label(class="form_label") }}
+        {{ form.username(size=32, class="form_input", autocomplete="off", autofocus=true,) }}
+        {% for error in form.username.errors %}
+          <span class="form_error">[{{ error }}]</span>
+        {% endfor %}
+      </div>
+
+      <div class="form_group">
+        {{ form.about_me.label(class="form_label") }}
+        {{ form.about_me(size=32, rows=4, class="form_input", autocomplete="off") }}
+        {% for error in form.about_me.errors %}
+          <span class="form_error">[{{ error }}]</span>
+        {% endfor %}
+      </div>
+
+
+      <div class="form_submit">
+        {{ form.submit(class="form_submit-button") }} 
+      </div>
+  
+
+    </form>
+  </section>
+  
+
+{% endblock %}

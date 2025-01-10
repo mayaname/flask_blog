@@ -1,0 +1,34 @@
+.profile_section {
+  width: 50%;
+  display: flex;
+  justify-content: flex-start;
+  background-color: snow;
+  border: 1px solid var(--accent-color1);
+}
+
+.user_img {
+  max-width: 100%;
+  height: 128px;
+  display: block;
+  border: 1px solid var(--image-border);
+  box-shadow: 4px 4px 4px rgba(9, 9, 9, 0.4);
+}
+
+.user_info {
+  margin: 2.5rem;
+}
+
+.user_info ul{
+  margin-left: 0.5rem;  padding: 0;
+  list-style: none;
+}
+
+.info_title {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.list_category {
+  font-weight: bold;
+}
+
