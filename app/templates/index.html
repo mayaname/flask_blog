@@ -18,17 +18,16 @@
   
   <div class="section">
     {% for post in posts %}
-      <div class="post_container">
-        <h3>{{ post.title}}</h3>
-        <p>{{ post.body }}</p>
-        By: <span class="post_author">{{ post.author.username }}</span> 
-        <span class="post_posted">on: {{ post.posted }}</span> 
+    <div class="post_container">
+      <div class="post_heading">
+
+        <span class="post_title">{{ post.title}}</span>
       </div>
-
+      <p>{{ post.body }}</p>
+      By: <span class="post_author">{{ post.author.username }}</span> 
+      <span class="post_posted">on: {{ post.posted }}</span> 
+    </div>
     {% endfor %}
-
-
-
   </div>
 
 {% endblock %}

@@ -13,7 +13,7 @@
 }
 
 .form_error {
-  color: #a02a36;
+  color: var(--text-error);
   font-size: 8px;
   margin: 0.5rem;
 }
@@ -51,15 +51,15 @@
   font-weight: 500;
   padding: 5px 30px;
   border-radius: 10px;
-  background-color: #666;
-  color: white;
+  background-color: var(--button-background);
+  color: var(--text-light);
   cursor: pointer;
 }
 
 
 
 .form_submit-button:hover {
-  background-color: #999;
+  background-color: var(--button-hover);
   
 }
 
@@ -72,7 +72,7 @@
 .section_form {
   width: 20%;
   margin: 0 auto;
-  border: 1px solid #ddd;
+  border: 1px solid var(--accent-color1);
   padding: 30px;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.4); 
 }
@@ -85,7 +85,6 @@
 }
 
 .password-container input {
-
   flex: 1;
   width: 100%; 
 }

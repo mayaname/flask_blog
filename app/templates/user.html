@@ -1,0 +1,37 @@
+{% extends "base_main.html" %}
+
+{% block head_content %} 
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/profile.css') }}">
+{% endblock %}
+
+{% block main_content %}
+
+  <section class="profile_section">
+    <img class="user_img" src="{{ user.avatar(128) }}">
+    <div class="user_info">
+      <p class="info_title">{{ user.firstname }} {{ user.lastname }}</p>
+      <ul>
+        <li><span class="list_category">User ID:</span>  {{ user.username }}</li>
+        <li>
+          <span class="list_category">Last seen:</span> 
+          {% if user.last_seen %} 
+            {{ user.last_seen }}
+          {% endif %} 
+        </li>
+        <li>{% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}</li>
+        <li>1 Follower 0 Following</li>
+        <li><a class="text_link" href="{{ url_for('pages.edit_profile') }}">Edit Profile</a></li>
+        <li><a class="text_link" href="#">Export Posts</a></li>
+      </ul>
+
+    </div>
+  </section>
+
+  <div class="section">
+    {% for post in posts %}
+      {% include '_post.html' %}
+    {% endfor %}
+  </div>
+
+
+{% endblock %}

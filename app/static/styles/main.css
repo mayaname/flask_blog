@@ -14,11 +14,15 @@ main.css
   --accent-color1: #ddd;
   --accent-color2: #666;
 
+  --button-background: #666;
+  --button-hover: #999;
 
   --text-dark: #333;
   --text-light: #fbfbfb;
   --text-muted: #999;
   --text-table: #333;
+  --text-error: #a02a36;
+
 
   --flash-border: #666;
   --error-dark: darkred;
@@ -30,6 +34,8 @@ main.css
   --warning-dark: #da9008;
   --warning-light: #f9ffa7fd;
   --warning-text: darkred;
+
+  --image-border: #999;
 }
 
 html {
@@ -104,6 +110,19 @@ body {
   padding: 0 3rem;
   margin: 20px auto;
 }
+
+.text_link {
+  color: var(--text-dark)
+}
+
+.text_link:hover {
+  font-weight: bold;
+}
+
+.text_link:visited {
+  color: var(--text-dark)
+}
+
 
 /* Flash notification section */
 .flash_container {
@@ -193,11 +212,23 @@ body {
 /* Posts */
 
 .post_container {
+  width: 80%;
   border: 1px solid var(--accent-color1);
   border-radius: 5px;
   padding: 10px;
-  margin-bottom: 2rem;
+  margin: 1rem auto;
   box-shadow: 4px 4px 4px rgba(9, 9, 9, 0.4); 
+}
+
+.post_heading {
+  display: flex;
+  align-items: center;
+}
+
+.post_title {
+  font-size: 1.25em;
+  font-weight: bold;
+  margin-left: 1rem;
 }
 
 .post_author {

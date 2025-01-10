@@ -15,11 +15,15 @@ import sqlalchemy.orm as so
 from .extensions import db
 from datetime import datetime, timezone
 from flask_login import UserMixin
+from hashlib import md5
 from typing import Optional
 from werkzeug.security import generate_password_hash, check_password_hash
 
 class User(db.Model, UserMixin):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
+    firstname: so.Mapped[Optional[str]] = so.mapped_column(sa.String(50))
+    lastname: so.Mapped[Optional[str]] = so.mapped_column(sa.String(50), 
+                                                index=True)
     username: so.Mapped[str] = so.mapped_column(sa.String(64), 
                                                 index=True,
                                                 unique=True)
@@ -27,6 +31,11 @@ class User(db.Model, UserMixin):
                                              index=True,
                                              unique=True)
     password: so.Mapped[Optional[str]] = so.mapped_column(sa.String(256))
+
+    about_me: so.Mapped[Optional[str]] = so.mapped_column(sa.String(140))
+
+    last_seen: so.Mapped[Optional[datetime]] = so.mapped_column(
+        default=lambda: datetime.now(timezone.utc))
 
     posts: so.WriteOnlyMapped['Post'] = so.relationship(
         back_populates='author')
@@ -39,6 +48,10 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return f'<User: {self.username}>'
+    
+    def avatar(self, size):
+        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        return f'https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}'
 
 
 class Post(db.Model):

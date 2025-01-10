@@ -34,12 +34,15 @@ This is a micro-blog application loosely based the Flask Mega Tutorial series by
 
 - [Render](https://render.com/docs/free)
 
-### Tools
+### Tools and Services
+
+- [.gitignore Generator](https://toptal.com/developers/gitignore)
 
 - [WWW SQL Designer](https://sql.toad.cz/?) Application
 
 - [WWW SQL Designer](https://github.com/ondras/wwwsqldesigner/wiki/Manual) Documentation
 
+- [Gravatar](https://docs.gravatar.com/)
 
 
 ## Changes from Flask Mega Tutorial

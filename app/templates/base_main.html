@@ -19,7 +19,7 @@
 </head>
 <body>
   <!-- Header section -->
-  {% include 'header.html' %}
+  {% include '_header.html' %}
 
   <div class="flash_container">
     {% for category, message in get_flashed_messages(with_categories=true) %}
@@ -39,7 +39,7 @@
   </main>
 
   <!-- Footer section -->
-  {% include 'footer.html' %}
+  {% include '_footer.html' %}
 
 </body>
 </html>

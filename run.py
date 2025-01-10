@@ -9,7 +9,6 @@ Revisions:
 12/29/2024 Update to work w/ app factory
 """
 
-
 from app import create_app
 
 app = create_app()
