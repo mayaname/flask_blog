@@ -1,9 +1,9 @@
 """
-Program: Init
+Program: Routes
 Author: Maya Name
 Creation Date: 12/30/2024
 Revision Date: 
-Description: Init file for Flask microblog application
+Description: Routes file for Flask microblog application
 
 Revisions:
 
@@ -100,8 +100,8 @@ def login():
                     'error')
             return redirect(url_for('pages.login'))
         login_user(user, remember=form.remember_me.data)
-        flash(f'{form.username.data} successfully logged in' , 'success')
-        # return redirect(url_for('pages.index'))
+        flash(f'{form.username.data} successfully logged in', 'success')
+        # ! return redirect(url_for('pages.index'))
 
         # Check the 'next' parameter for safe redirection
         next_page = request.form.get('next') or request.args.get('next') 
@@ -141,19 +141,27 @@ def signup():
 
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data)
-        print(f'Entered password: {form.password.data}')
+        # ! print(f'Entered password: {form.password.data}')
 
         user.set_password(form.password.data)
 
         # Debug print to check the hashed password
-        print(f'Hashed password: {user.password}')
+        # ! print(f'Hashed password: {user.password}')
 
         db.session.add(user)
         db.session.commit()
         flash(f'{form.username.data} successfully signed up' , 'success')
+        # ! return redirect(url_for('pages.login'))
+
+        # Check the 'next' parameter for safe redirection
+        next_page = request.form.get('next') or request.args.get('next') 
+
+        if next_page and is_safe_redirect_url(next_page):
+            # Redirect safely
+            return redirect(next_page)
+        # Fallback to a default page
         return redirect(url_for('pages.login'))
-
-
+    
 
     return render_template('signup.html', 
                                head_title=head_title,
@@ -174,7 +182,6 @@ def user(username):
                            user=user, 
                            posts=posts)
 
-
 @pages.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
@@ -183,17 +190,30 @@ def edit_profile():
     form = EditProfileForm()
     # Handles valid submit
     if form.validate_on_submit():
-        current_user.username = form.username.data
+        current_user.firstname = form.firstname.data
+        current_user.lastname = form.lastname.data
         current_user.about_me = form.about_me.data
         db.session.commit()
-        flash('Your changes have been saved.')
-        return redirect(url_for('edit_profile'))
+        flash('Your changes have been saved.', 'success')
+        # ! return redirect(url_for('pages.edit_profile'))
+    
+        # Check the 'next' parameter for safe redirection
+        next_page = request.form.get('next') or request.args.get('next') 
+
+        if next_page and is_safe_redirect_url(next_page):
+            # Redirect safely
+            return redirect(next_page)
+        # Fallback to a default page
+        return redirect(url_for('pages.edit_profile'))
+
     # Handles initial form display w/ current data
     elif request.method == 'GET':
         # Populate form with current data from database
-        form.username.data = current_user.username
+        form.firstname.data = current_user.firstname
+        form.lastname.data = current_user.lastname
         form.about_me.data = current_user.about_me
     return render_template('edit_profile.html', 
                            head_title=head_title,
                            page_title=page_title,
                            form=form)
+

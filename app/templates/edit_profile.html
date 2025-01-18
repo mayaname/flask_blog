@@ -13,10 +13,19 @@
 <section class="section_form">
     <form  class="form" method="post" novalidate>
       {{ form.hidden_tag() }}
+
       <div class="form_group">
-        {{ form.username.label(class="form_label") }}
-        {{ form.username(size=32, class="form_input", autocomplete="off", autofocus=true,) }}
-        {% for error in form.username.errors %}
+        {{ form.firstname.label(class="form_label") }}
+        {{ form.firstname(size=32, class="form_input", autocomplete="off", autofocus=true,) }}
+        {% for error in form.firstname.errors %}
+          <span class="form_error">[{{ error }}]</span>
+        {% endfor %}
+      </div>
+
+      <div class="form_group">
+        {{ form.lastname.label(class="form_label") }}
+        {{ form.lastname(size=32, class="form_input", autocomplete="off", autofocus=true,) }}
+        {% for error in form.lastname.errors %}
           <span class="form_error">[{{ error }}]</span>
         {% endfor %}
       </div>
@@ -34,7 +43,6 @@
         {{ form.submit(class="form_submit-button") }} 
       </div>
   
-
     </form>
   </section>
   

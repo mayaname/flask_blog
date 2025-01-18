@@ -25,6 +25,7 @@ cspell.json
 
 # Flask specific
 instance/
+logs/
 migrations/
 __pycache__/
 

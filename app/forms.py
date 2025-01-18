@@ -26,6 +26,8 @@ class LoginForm(FlaskForm):
 
 
 class SignupForm(FlaskForm):
+    firstname = StringField('First name', validators=[InputRequired()])
+    lastname = StringField('Last name', validators=[InputRequired()])
     username = StringField('Username', validators=[InputRequired()])
     password = PasswordField('Password', validators=[InputRequired()])
     password2 = PasswordField(
@@ -47,6 +49,7 @@ class SignupForm(FlaskForm):
 
 
 class EditProfileForm(FlaskForm):
-    username = StringField('Username', validators=[InputRequired()])
+    firstname = StringField('First name', validators=[InputRequired()])
+    lastname = StringField('Last name', validators=[InputRequired()])
     about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
     submit = SubmitField('Submit')
