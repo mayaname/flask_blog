@@ -56,11 +56,26 @@
   cursor: pointer;
 }
 
+.form_submit-button_sm {
+  display: inline;
+  margin: 5px;
+  border: none;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background-color: var(--button-background);
+  color: var(--text-light);
+  cursor: pointer;
+}
 
 
 .form_submit-button:hover {
   background-color: var(--button-hover);
-  
+}
+
+.form_submit-button_sm:hover {
+  background-color: var(--button-hover); 
 }
 
 .form_invalid_feedback {

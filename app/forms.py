@@ -53,3 +53,7 @@ class EditProfileForm(FlaskForm):
     lastname = StringField('Last name', validators=[InputRequired()])
     about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
     submit = SubmitField('Submit')
+
+
+class FollowForm(FlaskForm):
+    submit = SubmitField('Submit')

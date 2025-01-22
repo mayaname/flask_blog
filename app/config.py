@@ -28,6 +28,5 @@ class Config:
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     MAIL_DEFAULT_SENDER=os.environ.get('MAIL_DEFAULT_SENDER')
-    # ADMIN = os.environ.get('MAIL_ADMIN')
     ADMIN = os.environ.get('MAIL_ADMIN').split(',')
 

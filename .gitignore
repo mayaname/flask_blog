@@ -38,6 +38,7 @@ __pycache__/
 pip-log.txt
 
 # Unit test / coverage reports
+tests.py
 .coverage
 .tox
 nosetests.xml

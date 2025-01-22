@@ -14,7 +14,7 @@ from datetime import datetime, timezone
 from flask import Blueprint, flash, render_template, redirect,  request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 from urllib.parse import urlparse, urljoin
-from app.forms import LoginForm, SignupForm, EditProfileForm
+from app.forms import LoginForm, SignupForm, EditProfileForm, FollowForm
 from app.extensions import db
 from app.models import User, Post
 
@@ -101,7 +101,6 @@ def login():
             return redirect(url_for('pages.login'))
         login_user(user, remember=form.remember_me.data)
         flash(f'{form.username.data} successfully logged in', 'success')
-        # ! return redirect(url_for('pages.index'))
 
         # Check the 'next' parameter for safe redirection
         next_page = request.form.get('next') or request.args.get('next') 
@@ -141,17 +140,12 @@ def signup():
 
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data)
-        # ! print(f'Entered password: {form.password.data}')
-
+        
         user.set_password(form.password.data)
-
-        # Debug print to check the hashed password
-        # ! print(f'Hashed password: {user.password}')
 
         db.session.add(user)
         db.session.commit()
         flash(f'{form.username.data} successfully signed up' , 'success')
-        # ! return redirect(url_for('pages.login'))
 
         # Check the 'next' parameter for safe redirection
         next_page = request.form.get('next') or request.args.get('next') 
@@ -177,10 +171,13 @@ def user(username):
         {'author': user, 'title': 'Test post #1', 'body': 'Some stuff 1', 'posted': 'Jan 10, 2025'},
         {'author': user, 'title': 'Test post #2', 'body': 'Some stuff 1', 'posted': 'Jan 10, 2025'}
     ]
+    form = FollowForm()
+
     return render_template('user.html', 
                            head_title=head_title,
                            user=user, 
-                           posts=posts)
+                           posts=posts,
+                           form=form)
 
 @pages.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
@@ -195,7 +192,6 @@ def edit_profile():
         current_user.about_me = form.about_me.data
         db.session.commit()
         flash('Your changes have been saved.', 'success')
-        # ! return redirect(url_for('pages.edit_profile'))
     
         # Check the 'next' parameter for safe redirection
         next_page = request.form.get('next') or request.args.get('next') 
@@ -217,3 +213,49 @@ def edit_profile():
                            page_title=page_title,
                            form=form)
 
+@pages.route('/follow/<username>', methods=['POST'])
+@login_required
+def follow(username):
+    form = FollowForm()
+    if form.validate_on_submit():
+        user = db.session.scalar(
+            sa.select(User).where(User.username == username))
+        if user is None:
+            flash(f'User {username} not found.', 
+                    'error')
+            return redirect(url_for('pages.index'))
+        if user == current_user:
+            flash('You cannot follow yourself!', 
+                    'error')
+            return redirect(url_for('pages.user', username=username))
+        current_user.follow(user)
+        db.session.commit()
+        flash(f'You are following {username}!', 
+                    'success')
+        return redirect(url_for('pages.user', username=username))
+    else:
+        return redirect(url_for('pages.index'))
+
+
+@pages.route('/unfollow/<username>', methods=['POST'])
+@login_required
+def unfollow(username):
+    form = FollowForm()
+    if form.validate_on_submit():
+        user = db.session.scalar(
+            sa.select(User).where(User.username == username))
+        if user is None:
+            flash(f'User {username} not found.', 
+                    'error')
+            return redirect(url_for('pages.index'))
+        if user == current_user:
+            flash('You cannot unfollow yourself!', 
+                    'error')
+            return redirect(url_for('pages.user', username=username))
+        current_user.unfollow(user)
+        db.session.commit()
+        flash(f'You are not following {username}.', 
+                    'success')
+        return redirect(url_for('pages.user', username=username))
+    else:
+        return redirect(url_for('pages.index'))
