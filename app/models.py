@@ -116,6 +116,7 @@ class User(db.Model, UserMixin):
 
 class Post(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
+    title: so.Mapped[Optional[str]] = so.mapped_column(sa.String(120))
     body: so.Mapped[str] = so.mapped_column(sa.Text)
     timestamp: so.Mapped[datetime] = so.mapped_column(
                 index=True, 

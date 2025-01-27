@@ -9,12 +9,16 @@ Revisions:
 
 """
 
+import bleach
 import sqlalchemy as sa
 from datetime import datetime, timezone
 from flask import Blueprint, flash, render_template, redirect,  request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
+from markupsafe import Markup
+from sqlalchemy import desc
 from urllib.parse import urlparse, urljoin
-from app.forms import LoginForm, SignupForm, EditProfileForm, FollowForm
+from app.config import Config
+from app.forms import LoginForm, SignupForm, EditProfileForm, FollowForm, PostForm
 from app.extensions import db
 from app.models import User, Post
 
@@ -38,49 +42,37 @@ def before_request():
 
 # Application routes
 
-@pages.route('/')
-@pages.route('/index/')
+@pages.route('/', methods=['GET', 'POST'])
+@pages.route('/index/', methods=['GET', 'POST'])
 def index():
     head_title = 'Home'
     page_title = 'Journal Posts'
-    user = {'username': 'Maya', 'email': 'maya@gmail.com'}
+    page = request.args.get('page', 1, type=int)
 
-    posts = [
-        {
-            'title': 'Using the Python Interpreter in Linux',
-            'author': {'username': 'John',
-                       'avatar': 'https://www.gravatar.com/avatar/d4c74594d841139328695756648b6bd6'},
-            'body': 'For Python interpreter, the open a terminal window and type python3,  To exit the interactive prompt, you can type exit() and press Enter or by pressing Ctrl-D. ',
-            'posted': '12/30/2024'
+    # posts = db.session.scalars(db.select(Post).order_by(desc(Post.timestamp))).all()
+    posts = db.paginate(db.select(Post).order_by(desc(Post.timestamp)),
+                        page=page,
+                        per_page=Config.POSTS_PER_PAGE,
+                        error_out=False
+                        )
 
-        },
-        {
-            'title': 'Creating a Virtual Environment with Python',
-            'author': {'username': 'Susan',
-                       'avatar': 'https://www.gravatar.com/avatar/d4c74594d841139328695756648b6bd6'},
-            'body': 'In the Linux terminal window, type python3 -m venv venv and press Enter. This creates a virtual environment called venv. To activate, type source venv/bin/activate and press Enter.',
-            'posted': '12/30/2024'
-        },
-        {
-            'title': 'Installing the Flask Package',
-            'author': {'username': 'Maya',
-                       'avatar': 'https://www.gravatar.com/avatar/d4c74594d841139328695756648b6bd6'},
-            'body': 'Be sure that you have the virtual environment activates. Type pip install flask. Note the lowercase f is user for the package name. Confirm the install by typing import flask in the Python interpreter window.',
-            'posted': '12/30/2024'
-        },
-        {
-            'title': 'Creating a Python Package',
-            'author': {'username': 'Bob',
-                       'avatar': 'https://www.gravatar.com/avatar/d4c74594d841139328695756648b6bd6'},
-            'body': 'In the application folder, create a subfolder called app. In the app subfolder, create an __init__.py file. This file will make the contents of the app subfolder into a package.',
-            'posted': '12/30/2024'
-        }
-    ]
+    # Mark the sanitized HTML as safe
+    for post in posts:
+        post.body = Markup(post.body)
+
+    # Navigate posts list
+    next_url = url_for('pages.index', page=posts.next_num) \
+        if posts.has_next else None
+    prev_url = url_for('pages.index', page=posts.prev_num) \
+        if posts.has_prev else None
+
     return render_template('index.html',
                            head_title=head_title,
                            page_title=page_title,
-                           posts=posts,
-                           user = user)
+                           posts=posts.items, 
+                           next_url=next_url,
+                           prev_url=prev_url
+                           )
 
 @pages.route('/login/', methods=['GET', 'POST'])
 def login():
@@ -166,17 +158,35 @@ def signup():
 @login_required
 def user(username):
     head_title = 'User Profile'
+    page = request.args.get('page', 1, type=int)
+
     user = db.first_or_404(sa.select(User).where(User.username == username))
-    posts = [
-        {'author': user, 'title': 'Test post #1', 'body': 'Some stuff 1', 'posted': 'Jan 10, 2025'},
-        {'author': user, 'title': 'Test post #2', 'body': 'Some stuff 1', 'posted': 'Jan 10, 2025'}
-    ]
+
+    posts = db.paginate(current_user.following_posts().order_by(Post.timestamp.desc()),
+                        page=page,
+                        per_page=Config.POSTS_PER_PAGE,
+                        error_out=False
+                        )
+
+    # Mark the sanitized HTML as safe
+    for post in posts:
+        post.body = Markup(post.body)
+
+    # Navigate posts list
+    next_url = url_for('pages.user', username=user.username, page=posts.next_num) \
+        if posts.has_next else None
+    prev_url = url_for('pages.user', username=user.username, page=posts.prev_num) \
+        if posts.has_prev else None
+
+    # Set for follower/following form buttons
     form = FollowForm()
 
     return render_template('user.html', 
                            head_title=head_title,
                            user=user, 
-                           posts=posts,
+                           posts=posts.items, 
+                           next_url=next_url,
+                           prev_url=prev_url,
                            form=form)
 
 @pages.route('/edit_profile', methods=['GET', 'POST'])
@@ -236,7 +246,6 @@ def follow(username):
     else:
         return redirect(url_for('pages.index'))
 
-
 @pages.route('/unfollow/<username>', methods=['POST'])
 @login_required
 def unfollow(username):
@@ -259,3 +268,31 @@ def unfollow(username):
         return redirect(url_for('pages.user', username=username))
     else:
         return redirect(url_for('pages.index'))
+    
+@pages.route('/add_entry/', methods=['GET', 'POST'])
+@login_required
+def add_entry():
+    head_title = 'Add Entry'
+    page_title = 'Add Journal Entry'
+
+    # Allowed elements for sanitized the entry input
+    ALLOWED_TAGS = ['p', 'br', 'code' 'strong', 'em', 'ul', 'ol', 'li']
+    ALLOWED_ATTRIBUTES = {}
+    
+    form = PostForm()
+    if form.validate_on_submit():
+        sanitized_body = bleach.clean(form.post.data, tags=ALLOWED_TAGS, attributes=ALLOWED_ATTRIBUTES)
+        post = Post(
+            title=form.title.data,           
+            body=sanitized_body, 
+            author=current_user)
+        db.session.add(post)
+        db.session.commit()
+        flash('Journal entry successfully added', 'success')
+        return redirect(url_for('pages.index'))
+    
+    return render_template('add_entry.html',
+                           head_title=head_title,
+                           page_title=page_title,
+                           form=form
+                           )

@@ -63,4 +63,11 @@
   </div>
 
 
+  {% if prev_url %}
+  <a class="text_link" href="{{ prev_url }}">Newer posts</a>
+  {% endif %}
+  {% if next_url %}
+  <a class="text_link" href="{{ next_url }}">Older posts</a>
+  {% endif %}
+
 {% endblock %}

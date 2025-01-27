@@ -49,6 +49,15 @@ body {
 
 }
 
+code {
+  font-family: Consolas,"courier new";
+  color: #333;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 5px 10px;
+  font-size: 105%;
+}
+
 /* Navigation */
 .header-nav {
   display: flex;
