@@ -1,0 +1,43 @@
+{% extends 'base_main.html'%}
+{% from 'macros/svg_icons.html' import show, hide %}
+
+
+{% block head_content %} 
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/forms.css') }}">
+  <script defer src="{{ url_for('static', filename='scripts/login.js') }}"></script>
+{% endblock %}
+
+{% block main_content %}
+
+<h1>{{ page_title }}</h1>
+
+<section class="section_form">
+  <form  class="form" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <div class="form_group">
+      {{ form.title.label(class="form_label") }}
+      {{ form.title (class="form_input", autocomplete="off", autofocus=true,) }}
+      {% for error in form.title.errors %}
+        <span class="form_error">[{{ error }}]</span>
+      {% endfor %}
+    </div>
+    <div class="form_group">
+        {{ form.post.label(class="form_label") }}
+        {{ form.post (class="form_input", autocomplete="off", rows=6) }}
+        {% for error in form.post.errors %}
+          <span class="form_error">[{{ error }}]</span>
+        {% endfor %}     
+
+    </div>
+      
+    <div class="form_submit">
+      {{ form.submit(class="form_submit-button") }} 
+    </div>
+
+  </form>
+
+    
+</section>
+
+
+{% endblock %}
