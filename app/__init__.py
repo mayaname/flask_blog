@@ -21,7 +21,7 @@ from flask_mail import Mail, Message
 from logging.handlers import SMTPHandler, RotatingFileHandler
 from .config import Config
 from . import errors
-from .extensions import db, login_manager, migrate
+from .extensions import db, login_manager, mail, migrate
 from .models import User, Post
 from .routes import pages
 
@@ -37,6 +37,7 @@ def create_app():
     db.init_app(app)
     login_manager.init_app(app)
     migrate.init_app(app, db)
+    mail.init_app(app)
 
     # Set view to login route 
     login_manager.login_view = 'pages.login'
@@ -62,7 +63,7 @@ def create_app():
         return {'db': db, 'User': User, 'Post': Post}
     
     # Set up logging abd email error notification
-    mail = Mail(app)
+    # mail = Mail(app)
 
     # Create Email Logging Handler
     class SendGridHandler(logging.Handler):
