@@ -21,7 +21,7 @@ from flask_mail import Mail, Message
 from logging.handlers import SMTPHandler, RotatingFileHandler
 from .config import Config
 from . import errors
-from .extensions import db, login_manager, mail, migrate
+from .extensions import db, login_manager, mail, migrate, moment
 from .models import User, Post
 from .routes import pages
 
@@ -38,6 +38,7 @@ def create_app():
     login_manager.init_app(app)
     migrate.init_app(app, db)
     mail.init_app(app)
+    moment.init_app(app)
 
     # Set view to login route 
     login_manager.login_view = 'pages.login'

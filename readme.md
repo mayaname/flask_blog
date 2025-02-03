@@ -49,6 +49,7 @@ This is a micro-blog/journal application loosely based the Flask Mega Tutorial s
 ## Changes from Flask Mega Tutorial
 
 - Define extensions like SQLAlchemy, Flash-Login, and Flask-Migrate in extensions.py
+- Used standard CSS rather than Bootstrap
 - Script to dismiss flash notification after 30 seconds in main.js
 - Script to show/hide login password in login.js
 - Define post column in Post class to support larger text content (more journal like)

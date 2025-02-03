@@ -25,7 +25,7 @@
         <li>
           <span class="list_category">Last seen:</span> 
           {% if user.last_seen %} 
-            {{ user.last_seen }}
+            {{ moment(user.last_seen).format('LLL') }}
           {% endif %} 
         </li>
         <li>{% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}</li>
