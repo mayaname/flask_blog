@@ -19,6 +19,7 @@ This is a micro-blog/journal application loosely based the Flask Mega Tutorial s
 - [Flask Login](https://flask-login.readthedocs.io/en/latest/)
 - [Flask-Mail 0.10.0](https://flask-mail.readthedocs.io/en/latest/)
 - [Flask Migrate](https://flask-migrate.readthedocs.io/en/latest/)
+- [Flask-Moment](https://flask-moment.readthedocs.io/en/latest/)
 - [Flask SQLAlchemy](https://flask-sqlalchemy.readthedocs.io/en/stable/)
 - [Flask with SendGrid](https://sendgrid.com/en-us/blog/sending-emails-from-python-flask-applications-with-twilio-sendgrid)
 - [logging](https://docs.python.org/3/library/logging.html)
