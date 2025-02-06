@@ -10,23 +10,32 @@ use run.py
 
 Revisions:
 01/02/2025 Add support for database and Flask shell
+02/06/2025 Updated to support German translations
 """
 
 
 import logging
 import os
 from datetime import timedelta
-from flask import Flask
+from flask import Flask, request
+from flask_babel import lazy_gettext as _l
 from flask_mail import Mail, Message
 from logging.handlers import SMTPHandler, RotatingFileHandler
 from .config import Config
 from . import errors
-from .extensions import db, login_manager, mail, migrate, moment
+from .extensions import db, login_manager, mail, migrate, moment, babel
 from .models import User, Post
 from .routes import pages
 
+def get_locale():
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
+
 def create_app():
     app = Flask(__name__)
+
+    def get_locale():
+        return request.accept_languages.best_match(app.config['LANGUAGES'])
+        # return 'de'
 
     # Sets config for development
     app.config.from_object(Config)
@@ -34,6 +43,7 @@ def create_app():
     app.config['REMEMBER_COOKIE_DURATION'] = timedelta(days=1)
 
     # Initialize extensions
+    babel.init_app(app, locale_selector=get_locale)
     db.init_app(app)
     login_manager.init_app(app)
     migrate.init_app(app, db)
@@ -42,7 +52,7 @@ def create_app():
 
     # Set view to login route 
     login_manager.login_view = 'pages.login'
-    login_manager.login_message = "You are not authorized to modify site content."
+    login_manager.login_message = _l("You are not authorized to modify site content.")
     login_manager.login_message_category = "warning"
 
     # Get user by id for login manager

@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a micro-blog/journal application loosely based the Flask Mega Tutorial series by Miguel Grinberg and several other tutorials. I have modified the application structure to suit my preferences, but still avoid circular imports. As I am still learning about Flask, I plan to use the app as a journal of sorts for short posts on Flask topics I find useful. I will also try to address some of the issues I encountered when deploying to PythonAnywhere. While these are mostly for my reference, it is my hope that others will also find them along with the application code of some use.
+This is a micro-blog/journal application loosely based on the 2024 version of the Flask Mega Tutorial series by Miguel Grinberg and several other tutorials. I have modified the application structure to suit my preferences, but still avoid circular imports. As I am still learning about Flask, I plan to use the app as a journal of sorts for short posts on Flask topics I find useful. I will also try to address some of the issues I encountered when deploying to PythonAnywhere. While these are mostly for my reference, it is my hope that others will also find them along with the application code of some use.
 
 ## Resources
 
@@ -13,6 +13,7 @@ This is a micro-blog/journal application loosely based the Flask Mega Tutorial s
 
 ### Package Documentation
 
+- [Flask-Babel](https://python-babel.github.io/flask-babel/)
 - [Bleach](https://bleach.readthedocs.io/en/latest/)
 - [Dotenv](https://pypi.org/project/python-dotenv/) 
 - [Flask](https://flask.palletsprojects.com/en/3.0.x/) 
@@ -59,4 +60,5 @@ This is a micro-blog/journal application loosely based the Flask Mega Tutorial s
 - Login not required for index page, shows all journal entries in descending order
 - User profile page show user and following entries in descending order
 - Use Bleach and Markupsafe modules to securely allow formatting of post body content
+- Babel translation to German rather than Spanish
 

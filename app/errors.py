@@ -10,6 +10,7 @@ Revisions:
 """
 
 from flask import render_template
+from flask_babel import lazy_gettext as _l
 from app.extensions import db
 
 # Ref to images on OneDrive
@@ -23,10 +24,10 @@ ERROR = {
     '403_MESSAGE_3':'Slip the admin a twenty, and try again!',
 
     '404_IMG':'404_error.jpg',
-    '404_HEADING':'Page Not Found',
-    '404_MESSAGE_1':'Oh no, I am so embarrassed!',
-    '404_MESSAGE_2':'I can\'t seem to find the page you requested.',
-    '404_MESSAGE_3':'Click the Sites link above to go back.',
+    '404_HEADING':_l('Page Not Found'),
+    '404_MESSAGE_1':_l('Oh no, I am so embarrassed!'),
+    '404_MESSAGE_2':_l('I cannot seem to find the page you requested.'),
+    '404_MESSAGE_3':_l('Click the Home link above to go back.'),
 
     '500_IMG':'500_error.webp',
     '500_HEADING':'Internal Server Error',

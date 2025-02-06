@@ -2,17 +2,19 @@
 Program: Routes
 Author: Maya Name
 Creation Date: 12/30/2024
-Revision Date: 
+Revision Date: 02/03/2025
 Description: Routes file for Flask microblog application
 
 Revisions:
+02/03/2025 Update text to support German translation
 
 """
 
 import bleach
 import sqlalchemy as sa
 from datetime import datetime, timezone
-from flask import Blueprint, flash, render_template, redirect, request, url_for
+from flask import Blueprint, flash, g, render_template, redirect, request, url_for
+from flask_babel import _, get_locale
 from flask_login import current_user, login_required, login_user, logout_user
 from markupsafe import Markup
 from sqlalchemy import desc
@@ -43,14 +45,16 @@ def before_request():
     if current_user.is_authenticated:
         current_user.last_seen = datetime.now(timezone.utc)
         db.session.commit()
+    # Set local formatting for date/time
+    g.locale = str(get_locale())
 
 # Application routes
 
 @pages.route('/', methods=['GET', 'POST'])
 @pages.route('/index/', methods=['GET', 'POST'])
 def index():
-    head_title = 'Home'
-    page_title = 'Journal Posts'
+    head_title = _('Home')
+    page_title = _('Journal Posts')
     page = request.args.get('page', 1, type=int)
 
     # posts = db.session.scalars(db.select(Post).order_by(desc(Post.timestamp))).all()
@@ -64,25 +68,19 @@ def index():
     for post in posts:
         post.body = Markup(post.body)
 
-    # Navigate posts list
-    next_url = url_for('pages.index', page=posts.next_num) \
-        if posts.has_next else None
-    prev_url = url_for('pages.index', page=posts.prev_num) \
-        if posts.has_prev else None
 
     return render_template('index.html',
                            head_title=head_title,
                            page_title=page_title,
                            posts=posts.items, 
-                           next_url=next_url,
-                           prev_url=prev_url
+                           pagination=posts,
                            )
 
 @pages.route('/login/', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-    head_title = 'Login'
-    page_title = 'Journal Login'
+    head_title = _('Login')
+    page_title = _('Journal Login')
 
     # Reroute to index if already logged in
     if current_user.is_authenticated:
@@ -92,11 +90,12 @@ def login():
         user = db.session.scalar(
             sa.select(User).where(User.username == form.username.data))
         if user is None or not user.check_password(form.password.data):
-            flash(f'Invalid login. Check your username and password.', 
+            flash(_('Invalid login. Check your username and password.'), 
                     'error')
             return redirect(url_for('pages.login'))
         login_user(user, remember=form.remember_me.data)
-        flash(f'{form.username.data} successfully logged in', 'success')
+        # flash(f'{form.username.data} successfully logged in', 'success')
+        flash(_('%(username)s successfully logged in' , username=form.username.data), 'success')
 
         # Check the 'next' parameter for safe redirection
         next_page = request.form.get('next') or request.args.get('next') 
@@ -117,7 +116,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    flash('Logged out successfully!', 'success')
+    flash(_('Logged out successfully!'), 'success')
 
     next_page = request.form.get('next') or request.args.get('next') 
     if next_page and is_safe_redirect_url(next_page):
@@ -127,8 +126,8 @@ def logout():
 @pages.route('/signup/', methods=['GET', 'POST'])
 def signup():
     form = SignupForm()
-    head_title = 'Sign Up'
-    page_title = 'Journal Sign Up'
+    head_title = _('Sign Up')
+    page_title = _('Journal Sign Up')
 
     # Reroute to index if already logged in
     if current_user.is_authenticated:
@@ -141,7 +140,8 @@ def signup():
 
         db.session.add(user)
         db.session.commit()
-        flash(f'{form.username.data} successfully signed up' , 'success')
+        # flash(f'{form.username.data} successfully signed up' , 'success')
+        flash(_('%(username)s successfully signed up' , username=form.username.data), 'success')
 
         # Check the 'next' parameter for safe redirection
         next_page = request.form.get('next') or request.args.get('next') 
@@ -161,7 +161,7 @@ def signup():
 @pages.route('/user/<username>')
 @login_required
 def user(username):
-    head_title = 'User Profile'
+    head_title = _('User Profile')
     page = request.args.get('page', 1, type=int)
 
     user = db.first_or_404(sa.select(User).where(User.username == username))
@@ -176,12 +176,6 @@ def user(username):
     for post in posts:
         post.body = Markup(post.body)
 
-    # Navigate posts list
-    next_url = url_for('pages.user', username=user.username, page=posts.next_num) \
-        if posts.has_next else None
-    prev_url = url_for('pages.user', username=user.username, page=posts.prev_num) \
-        if posts.has_prev else None
-
     # Set for follower/following form buttons
     form = FollowForm()
 
@@ -189,15 +183,14 @@ def user(username):
                            head_title=head_title,
                            user=user, 
                            posts=posts.items, 
-                           next_url=next_url,
-                           prev_url=prev_url,
+                           pagination=posts,
                            form=form)
 
 @pages.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
-    head_title = 'Edit Profile'
-    page_title = 'Edit Profile'
+    head_title = _('Edit Profile')
+    page_title = _('Edit Profile')
     form = EditProfileForm()
     # Handles valid submit
     if form.validate_on_submit():
@@ -276,8 +269,8 @@ def unfollow(username):
 @pages.route('/add_entry/', methods=['GET', 'POST'])
 @login_required
 def add_entry():
-    head_title = 'Add Entry'
-    page_title = 'Add Journal Entry'
+    head_title = _('Add Entry')
+    page_title = _('Add Journal Entry')
 
     # Allowed elements for sanitized the entry input
     ALLOWED_TAGS = ['p', 'br', 'code' 'strong', 'em', 'ul', 'ol', 'li']
@@ -292,7 +285,7 @@ def add_entry():
             author=current_user)
         db.session.add(post)
         db.session.commit()
-        flash('Journal entry successfully added', 'success')
+        flash(_('Journal entry successfully added'), 'success')
         return redirect(url_for('pages.index'))
     
     return render_template('add_entry.html',
@@ -304,8 +297,8 @@ def add_entry():
 @pages.route('/reset_password_request/', methods=['GET', 'POST'])
 # @login_required
 def reset_password_request():
-    head_title = 'Password Reset'
-    page_title = 'Reset Password Request'
+    head_title = _('Password Reset')
+    page_title = _('Reset Password Request')
     form = ResetPasswordRequestForm()
 
     if current_user.is_authenticated:
@@ -316,7 +309,7 @@ def reset_password_request():
             sa.select(User).where(User.email == form.email.data))
         if user:
             send_password_reset_email(user)
-        flash('Check your email for the instructions to reset your password', 'success')
+        flash(_('Check your email for the instructions to reset your password'), 'success')
         return redirect(url_for('pages.login'))
     
 
@@ -337,6 +330,6 @@ def reset_password(token):
     if form.validate_on_submit():
         user.set_password(form.password.data)
         db.session.commit()
-        flash('Your password has been reset.', 'success')
+        flash(_('Your password has been reset.'), 'success')
         return redirect(url_for('pages.login'))
     return render_template('reset_password.html', form=form)
