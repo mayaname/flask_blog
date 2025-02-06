@@ -27,13 +27,12 @@ from .extensions import db, login_manager, mail, migrate, moment, babel
 from .models import User, Post
 from .routes import pages
 
-def get_locale():
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 def create_app():
     app = Flask(__name__)
 
     def get_locale():
+        # Get the local language for supported translation (German)
         return request.accept_languages.best_match(app.config['LANGUAGES'])
         # return 'de'
 
