@@ -131,8 +131,6 @@ class User(db.Model, UserMixin):
         back_populates='following')    
     
 
-
-
 class Post(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     title: so.Mapped[Optional[str]] = so.mapped_column(sa.String(120))
@@ -142,7 +140,7 @@ class Post(db.Model):
                 default=lambda: datetime.now(timezone.utc))
     user_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(User.id),
                                                index=True)
-
+    language: so.Mapped[Optional[str]] = so.mapped_column(sa.String(5))
     # One to many relationship for user and posts
     author: so.Mapped[User] = so.relationship(back_populates='posts')
 

@@ -61,4 +61,5 @@ This is a micro-blog/journal application loosely based on the 2024 version of th
 - User profile page show user and following entries in descending order
 - Use Bleach and Markupsafe modules to securely allow formatting of post body content
 - Babel translation to German rather than Spanish
+- Use googletrans as no credit card is required, Display entire translated post on separate page
 

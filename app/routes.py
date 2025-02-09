@@ -10,12 +10,14 @@ Revisions:
 
 """
 
+import asyncio
 import bleach
 import sqlalchemy as sa
 from datetime import datetime, timezone
 from flask import Blueprint, flash, g, render_template, redirect, request, url_for
 from flask_babel import _, get_locale
 from flask_login import current_user, login_required, login_user, logout_user
+from langdetect import detect, LangDetectException
 from markupsafe import Markup
 from sqlalchemy import desc
 from urllib.parse import urlparse, urljoin
@@ -27,6 +29,7 @@ from app.forms import (LoginForm, SignupForm, EditProfileForm,
 from app.email import send_password_reset_email
 from app.extensions import db
 from app.models import User, Post
+from app.trans import translate_text
 
 pages = Blueprint('pages', __name__)
 
@@ -192,6 +195,7 @@ def edit_profile():
     head_title = _('Edit Profile')
     page_title = _('Edit Profile')
     form = EditProfileForm()
+
     # Handles valid submit
     if form.validate_on_submit():
         current_user.firstname = form.firstname.data
@@ -278,11 +282,20 @@ def add_entry():
     
     form = PostForm()
     if form.validate_on_submit():
+        # Try to determine language of post
+        try:
+            language = detect(form.post.data)
+        except LangDetectException:
+            language = ''
+
+        # Only allow safe text to be added to database
         sanitized_body = bleach.clean(form.post.data, tags=ALLOWED_TAGS, attributes=ALLOWED_ATTRIBUTES)
+        
         post = Post(
             title=form.title.data,           
             body=sanitized_body, 
-            author=current_user)
+            author=current_user,
+            language=language)
         db.session.add(post)
         db.session.commit()
         flash(_('Journal entry successfully added'), 'success')
@@ -333,3 +346,40 @@ def reset_password(token):
         flash(_('Your password has been reset.'), 'success')
         return redirect(url_for('pages.login'))
     return render_template('reset_password.html', form=form)
+
+@pages.route('/trans_text/<int:post_id>', methods=['GET', 'POST'])
+# @login_required
+def trans_text(post_id):
+    head_title = _('Translate')
+    page_title = _('Translated Journal Entry')
+
+    post = db.session.scalars(db.select(Post).where(Post.id==post_id)).first()
+
+    src_lang = post.language
+    dest_lang = g.locale
+    trans_title = post.title
+    trans_body = post.body
+
+    # Get the existing event loop or create a new one if none exists
+    try:
+        loop = asyncio.get_running_loop()
+    except RuntimeError:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+
+    # Run both translations concurrently
+    translated_title, translated_body = loop.run_until_complete(
+        asyncio.gather(
+            translate_text(text=trans_title, src=src_lang, dest=dest_lang),
+            translate_text(text=trans_body, src=src_lang, dest=dest_lang)
+        )
+    )
+
+
+    return render_template('trans_text.html', 
+                           head_title=head_title,
+                           page_title=page_title,
+                           post=post,
+                           translated_title=translated_title,
+                           translated_body=translated_body
+                           )

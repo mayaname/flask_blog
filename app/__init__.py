@@ -48,7 +48,7 @@ def create_app():
     migrate.init_app(app, db)
     mail.init_app(app)
     moment.init_app(app)
-
+    
     # Set view to login route 
     login_manager.login_view = 'pages.login'
     login_manager.login_message = _l("You are not authorized to modify site content.")
