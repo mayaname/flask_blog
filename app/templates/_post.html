@@ -3,14 +3,15 @@
     <span><img src="{{ post.author.avatar(36) }}"></span>
     <span class="post_title">{{ post.title}}</span>
   </div>
-  <p>{{ post.body }}</p>
-  By: <span class="post_author">{{ post.author.username }}</span> 
-  <span class="post_posted">on: {{ moment(post.timestamp).format('LLL') }}</span> 
-  <p>
-    {% if post.language and post.language != g.locale %}
-    <a href="{{ url_for('pages.trans_text', post_id=post.id) }}">Translate Entry</a>
-    {% endif %}
-    <a href="#">View Profile</a>
-
-  </p>
+  <div id="post{{ post.id }}">
+    <p>{{ post.body }}</p>
+    By: <span class="post_author">{{ post.author.username }}</span> 
+    <span class="post_posted">on: {{ moment(post.timestamp).format('LLL') }}</span> 
+    <p>
+      {% if post.language and post.language != g.locale %}
+      <a href="{{ url_for('pages.trans_text', post_id=post.id) }}">Translate Entry</a>
+      {% endif %}
+      <a href="#" class="profile-link" data-username="{{ post.author.username }}">Author Profile</a>
+    </p>
+  </div>
 </div>

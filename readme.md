@@ -62,4 +62,6 @@ This is a micro-blog/journal application loosely based on the 2024 version of th
 - Use Bleach and Markupsafe modules to securely allow formatting of post body content
 - Babel translation to German rather than Spanish
 - Use googletrans as no credit card is required, Display entire translated post on separate page
-
+- Used SQLAlchemy for navbar search form that searches the entry titles
+- Added a author profile not restricted by login requirement
+- Update the author profile to be a modal popup (original route and pages was retained)

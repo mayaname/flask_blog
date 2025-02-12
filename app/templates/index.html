@@ -2,7 +2,8 @@
 
 
 {% block head_content %} 
-  
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/modal.css') }}">
+  <script defer src="{{ url_for('static', filename='scripts/profile.js') }}"></script>
 {% endblock %}
 
 {% block main_content %}
@@ -43,5 +44,13 @@
     {% endif %}
   </div>
 
+  <div id="profileModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div id="profileContent">
+        <!-- Profile details will be loaded here -->
+      </div>
+    </div>
+  </div>
 
 {% endblock %}

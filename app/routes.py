@@ -24,7 +24,7 @@ from urllib.parse import urlparse, urljoin
 from app.config import Config
 from app.forms import (LoginForm, SignupForm, EditProfileForm,
                        FollowForm, PostForm, ResetPasswordRequestForm,
-                       ResetPasswordForm
+                       ResetPasswordForm, SearchForm
                        )
 from app.email import send_password_reset_email
 from app.extensions import db
@@ -383,3 +383,52 @@ def trans_text(post_id):
                            translated_title=translated_title,
                            translated_body=translated_body
                            )
+
+@pages.route('/search/', methods=['GET', 'POST'])
+def search():
+    head_title = _('Search Results')
+    page_title = _('Search Results')
+    page = request.args.get('page', 1, type=int)
+
+    form = SearchForm()
+
+    if form.validate_on_submit():
+        searched = form.searched.data
+        
+        posts = db.paginate(db.select(Post).filter(Post.title.contains(searched)).order_by(desc(Post.timestamp)),
+                    page=page,
+                    per_page=Config.POSTS_PER_PAGE,
+                    error_out=False
+                    )
+
+        # Mark the sanitized HTML as safe
+        for post in posts:
+            post.body = Markup(post.body)
+
+        return render_template('search.html', 
+                               head_title=head_title,
+                               page_title=page_title,
+                               form=form,
+                               searched=searched,
+                               posts=posts.items, 
+                               pagination=posts)
+    
+    return render_template('search.html', form=form)
+
+@pages.route('/profile/<username>')
+def profile(username):
+    head_title = _('Author Profile')
+    page_title = _('Author Profile')
+
+    user = db.first_or_404(sa.select(User).where(User.username == username))
+
+    return render_template('_profile.html', 
+                           head_title=head_title,
+                           page_title=page_title,
+                           user=user, 
+)
+
+@pages.route('/profile_popup/<username>')
+def profile_popup(username):
+    user = db.first_or_404(sa.select(User).where(User.username == username))
+    return render_template('_profile_content.html', user=user)
