@@ -1,0 +1,45 @@
+{% extends 'base_main.html'%}
+
+{% block head_content %} 
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/forms.css') }}">
+{% endblock %}
+
+{% block main_content %}
+
+  <h1 class="page_title">{{ page_title }}</h1>
+
+  <h3  class="page_title">You searched for: {{ searched }}</h3>
+
+  <!-- Display entry listings -->
+  {% if posts %} 
+    
+    <div class="section">
+      {% for post in posts %}
+        {% include '_post.html' %}
+      {% endfor %}
+    </div>
+
+    <!-- Pagination links -->
+    <div class="pagination">
+      {% if pagination.has_prev %}
+          <a href="{{ url_for('pages.search', page=pagination.prev_num) }}">Previous</a>
+      {% else %}
+          <span>Previous</span>
+      {% endif %}
+
+      <span>Page {{ pagination.page }} of {{ pagination.pages }}</span>
+
+      {% if pagination.has_next %}
+          <a href="{{ url_for('pages.search', page=pagination.next_num) }}">Next</a>
+      {% else %}
+          <span>Next</span>
+      {% endif %}
+    </div>
+
+  {% else %}
+    <p class="table__empty">No entries were found that matched your search criteria.</p>
+  {% endif %}
+
+
+
+{% endblock %}

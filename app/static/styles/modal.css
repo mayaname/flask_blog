@@ -1,0 +1,69 @@
+/* Modal Background */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Modal Content */
+  .modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    width: 50%;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .profile_section {
+    width: 90%;
+    display: flex;
+    justify-content: flex-start;
+    background-color: snow;
+    border: 1px solid #ddd;
+  }
+
+  .user_img {
+    max-width: 100%;
+    height: 128px;
+    display: block;
+    border: 1px solid var(--image-border);
+    box-shadow: 4px 4px 4px rgba(9, 9, 9, 0.4);
+  }
+
+  .user_info {
+    margin: 2.5rem;
+  }
+  
+  .user_info ul{
+    margin-left: 0.5rem;  padding: 0;
+    list-style: none;
+  }
+  
+  .info_title {
+    font-size: 2em;
+    font-weight: bold;
+  }
+  
+  .list_category {
+    font-weight: bold;
+  }
+
+  /* Close Button */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .close:hover {
+    color: black;
+  }
+  
