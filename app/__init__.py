@@ -24,6 +24,7 @@ from logging.handlers import SMTPHandler, RotatingFileHandler
 from .config import Config
 from . import errors
 from .extensions import db, login_manager, mail, migrate, moment, babel
+from .forms import SearchForm
 from .models import User, Post
 from .routes import pages
 
@@ -58,6 +59,13 @@ def create_app():
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
+    
+    # Context processor registration
+    @app.context_processor 
+    # Pass form thru base to header
+    def base_main(): 
+        search_form = SearchForm() 
+        return dict(search_form=search_form)
 
     # Register blueprints
     app.register_blueprint(pages)

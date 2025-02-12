@@ -7,54 +7,9 @@
 
 {% block main_content %}
 
-  <section class="profile_section">
-    <img class="user_img" src="{{ user.avatar(128) }}">
-    <div class="user_info">
-      <p class="info_title">
-        {% if user.firstname %}
-          {{ user.firstname }}
-        {% else %}
-          {{ user.username }}
-        {% endif %}
-        {% if user.lastname %}
-          {{ user.lastname }}
-        {% endif %}
-      </p>
-      <ul>
-        <li><span class="list_category">User ID:</span>  {{ user.username }}</li>
-        <li>
-          <span class="list_category">Last seen:</span> 
-          {% if user.last_seen %} 
-            {{ moment(user.last_seen).format('LLL') }}
-          {% endif %} 
-        </li>
-        <li>{% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}</li>
+  <!-- Footer section -->
+  {% include '_profile.html' %}
 
-        <li>{{ user.followers_count() }} Follower {{ user.following_count() }} Following</li>
-        
-        {% if user == current_user %}
-          <li><a class="text_link" href="{{ url_for('pages.edit_profile') }}">Edit Profile</a></li>
-        {% elif not current_user.is_following(user) %}
-        <li>
-            <form action="{{ url_for('pages.follow', username=user.username) }}" method="post">
-                {{ form.hidden_tag() }}
-                {{ form.submit(class="form_submit-button_sm", value='Follow') }}
-            </form>
-          </li>
-        {% else %}
-        <li>
-            <form action="{{ url_for('pages.unfollow', username=user.username) }}" method="post">
-                {{ form.hidden_tag() }}
-                {{ form.submit(class="form_submit-button_sm", value="Unfollow") }}
-            </form>
-          </li>
-        {% endif %}
-
-        <li><a class="text_link" href="#">Export Posts</a></li>
-      </ul>
-
-    </div>
-  </section>
 
   <div class="section">
     {% for post in posts %}

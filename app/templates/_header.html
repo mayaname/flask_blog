@@ -1,5 +1,20 @@
 <header class="header-nav">
     <p class="logo">Flask Journal</p>
+
+    <!-- Add a conditional to check if form is defined --> 
+    {% if search_form %} 
+    <form class="header_search" method="post" action="{{ url_for('pages.search') }}" autocomplete="off"> 
+        {{ search_form.hidden_tag() }} 
+      <input class="search_form-input" type="search" name="searched" placeholder="Content in Title" aria-label="Search"> 
+      <button class="search_btn" type="submit">
+        Search
+      </button> 
+    </form> 
+  {% else %}
+    <p>Form not found.</p>
+  {% endif %}
+  
+
     <nav>
       <ul class="nav_links">
         <li><a class="nav_link" href="{{ url_for('pages.index') }}">{{_('Home')}}</a></li>
