@@ -277,7 +277,7 @@ def add_entry():
     page_title = _('Add Journal Entry')
 
     # Allowed elements for sanitized the entry input
-    ALLOWED_TAGS = ['p', 'br', 'code' 'strong', 'em', 'ul', 'ol', 'li']
+    ALLOWED_TAGS = ['p', 'br', 'code', 'strong', 'em', 'ul', 'ol', 'li']
     ALLOWED_ATTRIBUTES = {}
     
     form = PostForm()
@@ -432,3 +432,13 @@ def profile(username):
 def profile_popup(username):
     user = db.first_or_404(sa.select(User).where(User.username == username))
     return render_template('_profile_content.html', user=user)
+
+@pages.route('/about/')
+def about():
+    head_title = 'About Site'
+    page_title = 'About this Site'
+
+    return render_template('about.html',
+                           head_title=head_title,
+                           page_title=page_title
+                           )

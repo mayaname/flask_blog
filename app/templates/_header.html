@@ -3,16 +3,16 @@
 
     <!-- Add a conditional to check if form is defined --> 
     {% if search_form %} 
-    <form class="header_search" method="post" action="{{ url_for('pages.search') }}" autocomplete="off"> 
-        {{ search_form.hidden_tag() }} 
-      <input class="search_form-input" type="search" name="searched" placeholder="Content in Title" aria-label="Search"> 
-      <button class="search_btn" type="submit">
-        Search
-      </button> 
-    </form> 
-  {% else %}
-    <p>Form not found.</p>
-  {% endif %}
+      <form class="header_search" method="post" action="{{ url_for('pages.search') }}" autocomplete="off"> 
+          {{ search_form.hidden_tag() }} 
+        <input class="search_form-input" type="search" name="searched" placeholder="Content in Title" aria-label="Search"> 
+        <button class="search_btn" type="submit">
+          Search
+        </button> 
+      </form> 
+    {% else %}
+      <p>Form not found.</p>
+    {% endif %}
   
 
     <nav>
@@ -24,7 +24,7 @@
         {% else %}
           <li><a class="nav_link" href="{{ url_for('pages.login') }}">{{_('Login')}}</a></li>
         {% endif %}
-        
+        <li><a class="nav_link" href="{{ url_for('pages.about') }}">{{_('About')}}</a></li> 
       </ul>
     </nav>
     
