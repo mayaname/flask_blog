@@ -121,11 +121,12 @@ code {
 }
 
 .text_link {
-  color: var(--text-dark)
+  color: var(--text-dark);
+  text-decoration: none;  
 }
 
 .text_link:hover {
-  font-weight: bold;
+  text-decoration: underline;
 }
 
 .text_link:visited {

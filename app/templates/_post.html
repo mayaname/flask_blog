@@ -9,9 +9,9 @@
     <span class="post_posted">on: {{ moment(post.timestamp).format('LLL') }}</span> 
     <p>
       {% if post.language and post.language != g.locale %}
-      <a href="{{ url_for('pages.trans_text', post_id=post.id) }}">Translate Entry</a>
+      <a class="text_link" href="{{ url_for('pages.trans_text', post_id=post.id) }}">Translate Entry</a>
       {% endif %}
-      <a href="#" class="profile-link" data-username="{{ post.author.username }}">Author Profile</a>
+      <a href="#" class="profile-link text_link" data-username="{{ post.author.username }}">Author Profile</a>
     </p>
   </div>
 </div>
