@@ -14,7 +14,7 @@ import asyncio
 import bleach
 import sqlalchemy as sa
 from datetime import datetime, timezone
-from flask import Blueprint, flash, g, render_template, redirect, request, url_for
+from flask import Blueprint, current_app, flash, g, render_template, redirect, request, url_for
 from flask_babel import _, get_locale
 from flask_login import current_user, login_required, login_user, logout_user
 from langdetect import detect, LangDetectException
@@ -63,7 +63,8 @@ def index():
     # posts = db.session.scalars(db.select(Post).order_by(desc(Post.timestamp))).all()
     posts = db.paginate(db.select(Post).order_by(desc(Post.timestamp)),
                         page=page,
-                        per_page=Config.POSTS_PER_PAGE,
+                        per_page = current_app.config['POSTS_PER_PAGE'],
+                        # per_page=Config.POSTS_PER_PAGE,
                         error_out=False
                         )
 
