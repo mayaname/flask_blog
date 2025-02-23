@@ -278,8 +278,8 @@ def add_entry():
     page_title = _('Add Journal Entry')
 
     # Allowed elements for sanitized the entry input
-    ALLOWED_TAGS = ['p', 'br', 'code', 'strong', 'em', 'ul', 'ol', 'li']
-    ALLOWED_ATTRIBUTES = {}
+    ALLOWED_TAGS = current_app.config['ALLOWED_TAGS']
+    ALLOWED_ATTRIBUTES = current_app.config['ALLOWED_ATTRIBUTES']
     
     form = PostForm()
     if form.validate_on_submit():

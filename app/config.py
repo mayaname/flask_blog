@@ -34,3 +34,7 @@ class Config:
 
     LANGUAGES = ['en', 'de']
 
+    # Allowed elements for sanitized the entry input
+    ALLOWED_TAGS = ['p', 'br', 'code', 'strong', 'em', 'ul', 'ol', 'li']
+    ALLOWED_ATTRIBUTES = {}
+

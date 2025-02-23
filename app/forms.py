@@ -63,7 +63,7 @@ class FollowForm(FlaskForm):
 class PostForm(FlaskForm):
     title = StringField(_l('Title'), validators=[InputRequired()])
     post = TextAreaField(_l('Entry'), validators=[
-        InputRequired(), Length(min=1, max=512)])
+        InputRequired(), Length(min=1, max=1024)])
     submit = SubmitField(_l('Post'))
 
 
