@@ -6,7 +6,7 @@ This is a micro-blog/journal application loosely based on the 2024 version of th
 
 I have modified the application structure to suit my preferences, but still avoid circular imports. As I am still learning about Flask, I plan to use the app as a journal of sorts for short posts on Flask topics I find useful. I will also try to address some of the issues I encountered when deploying to PythonAnywhere. While these are mostly for my reference, it is my hope that others will also find them along with the application code of some use.
 
-View a streamlined version of this Flask application on [PythonAnywhere](https://mayajournal.pythonanywhere.com/)
+View a streamlined version of this Flask application on [PythonAnywhere](https://mayajournal.pythonanywhere.com/ target="_blank")
 
 ## Resources
 
