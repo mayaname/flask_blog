@@ -58,3 +58,4 @@ nosetests.xml
 
 # Other
 tools/
+resources/
