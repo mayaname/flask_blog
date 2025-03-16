@@ -2,9 +2,9 @@
 
 ## Description
 
-This is a micro-blog/journal application loosely based on the 2024 version of the Flask Mega Tutorial series by Miguel Grinberg and several other tutorials. You can view a stripped down version of this application on PythonAnywhere.
+This is a blog/journal application loosely based on the 2024 version of the Flask Mega Tutorial series by Miguel Grinberg and several other tutorials. You can view a stripped down version of this application on PythonAnywhere.
 
-I have modified the application structure to suit my preferences, but still avoid circular imports. As I am still learning about Flask, I plan to use the app as a journal of sorts for short posts on Flask topics I find useful. I will also try to address some of the issues I encountered when deploying to PythonAnywhere. While these are mostly for my reference, it is my hope that others will also find them along with the application code of some use.
+I have modified the application structure to suit my preferences, but still avoid circular imports. I plan to use the app as a journal of sorts for short posts on Flask topics I find useful. I will also try to address some of the issues I encountered when deploying to PythonAnywhere. While these are mostly for my reference, it is my hope that others will also find them along with the application code of some use.
 
 View a streamlined version of this Flask application on  [PythonAnywhere](https://mayajournal.pythonanywhere.com/).
 
@@ -16,42 +16,6 @@ View a streamlined version of this Flask application on  [PythonAnywhere](https:
 
 - [Flask Mega Tutorial](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world) series
 - [GitHub](https://github.com/miguelgrinberg/microblog)
-
-### Package Documentation
-
-- [Flask-Babel](https://python-babel.github.io/flask-babel/)
-- [Bleach](https://bleach.readthedocs.io/en/latest/)
-- [Dotenv](https://pypi.org/project/python-dotenv/) 
-- [Flask](https://flask.palletsprojects.com/en/3.0.x/) 
-- [Flask Login](https://flask-login.readthedocs.io/en/latest/)
-- [Flask-Mail 0.10.0](https://flask-mail.readthedocs.io/en/latest/)
-- [Flask Migrate](https://flask-migrate.readthedocs.io/en/latest/)
-- [Flask-Moment](https://flask-moment.readthedocs.io/en/latest/)
-- [Flask SQLAlchemy](https://flask-sqlalchemy.readthedocs.io/en/stable/)
-- [Flask with SendGrid](https://sendgrid.com/en-us/blog/sending-emails-from-python-flask-applications-with-twilio-sendgrid)
-- [logging](https://docs.python.org/3/library/logging.html)
-- [MarkupSafe](https://markupsafe.palletsprojects.com/en/stable/)
-- [unittest](https://docs.python.org/3/library/unittest.html)
-- [WTForms](https://wtforms.readthedocs.io/en/3.2.x/) 
-
-### Database Documentation
-
-- [MySQL](https://dev.mysql.com/doc/) For PythonAnywhere
-- [SQLite3](https://www.sqlite.org/docs.html) For development
-
-### Deployment
-
-- [PythonAnywhere](https://help.pythonanywhere.com/pages/)
-
-### Tools and Services
-
-- [.gitignore Generator](https://toptal.com/developers/gitignore)
-- [GitHub](https://github.com/)
-- [GitHub Docs](https://docs.github.com/en)
-- [Gravatar](https://docs.gravatar.com/)
-- [SendGrid](https://sendgrid.com/en-us)
-- [WWW SQL Designer](https://sql.toad.cz/?) Application
-- [WWW SQL Designer](https://github.com/ondras/wwwsqldesigner/wiki/Manual) Documentation
 
 ## Changes from Flask Mega Tutorial
 
